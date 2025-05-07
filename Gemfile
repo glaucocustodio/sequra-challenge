@@ -66,3 +66,5 @@ group :development, :test do
   gem "standard"
   gem "standard-rails"
 end
+
+gem "shale", "~> 1.2"
