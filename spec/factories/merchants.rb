@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :merchant do
-    uuid { "" }
-    reference { "MyString" }
-    email { "MyString" }
-    live_on { "2025-05-07" }
-    disbursement_frequency { "MyString" }
-    minimum_monthly_fee { "MyString" }
+    uuid { SecureRandom.uuid }
+    reference { Faker::Company.name }
+    email { Faker::Internet.email }
+    live_on { Faker::Date.backward(days: 365) }
+    disbursement_frequency { "daily" }
+    minimum_monthly_fee { Faker::Number.between(from: 10, to: 100) }
   end
 end

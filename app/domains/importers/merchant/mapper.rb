@@ -9,14 +9,14 @@ module Importers
       attribute :minimum_monthly_fee, :float
 
       def valid?
-        [id, reference, email, live_on, disbursement_frequency, minimum_monthly_fee].all?(&:present?)
+        [uuid, reference, email, live_on, disbursement_frequency, minimum_monthly_fee].all?(&:present?)
       end
-
-      def uuid = id
 
       def disbursement_frequency
         super&.downcase
       end
+
+      alias_method :uuid, :id
     end
   end
 end

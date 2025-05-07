@@ -1,6 +1,6 @@
 module Importers
   module Merchant
-    class Importer < Struct.new(:csv_file_path, keyword_init: true)
+    class Importer < Base
       def import
         ::Merchant.insert_all(merchants)
       end
@@ -8,7 +8,7 @@ module Importers
       private
 
       def merchants
-        mapped_merchants.filter_map do |merchant|
+        records.filter_map do |merchant|
           next unless merchant.valid?
 
           {
@@ -22,9 +22,7 @@ module Importers
         end
       end
 
-      def mapped_merchants = Mapper.from_csv(csv_content, headers: true, col_sep: ";")
-
-      def csv_content = ::File.read(csv_file_path)
+      def mapper_class = Merchant::Mapper
     end
   end
 end

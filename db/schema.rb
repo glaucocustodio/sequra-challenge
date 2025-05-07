@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_07_142039) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_07_154421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,4 +30,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_142039) do
     t.index ["reference"], name: "index_merchants_on_reference", unique: true
     t.index ["uuid"], name: "index_merchants_on_uuid", unique: true
   end
+
+  create_table "orders", force: :cascade do |t|
+    t.uuid "uuid", null: false
+    t.bigint "merchant_id", null: false
+    t.integer "amount", null: false
+    t.date "placed_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
+    t.index ["uuid"], name: "index_orders_on_uuid", unique: true
+  end
+
+  add_foreign_key "orders", "merchants"
 end
