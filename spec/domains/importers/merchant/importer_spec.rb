@@ -73,6 +73,7 @@ RSpec.describe Importers::Merchant::Importer do
           b616488f-c8b2-45dd-b29f-364d12a20238;;;2024-10-15;WEEKLY;200.0
           c616488f-c8b2-45dd-b29f-364d12a20238;dooley_stracke;dooley_stracke@gmail.com;2024-10-15;;200.0
           ;klocko_stanton_and_hammes;info@klocko-stanton-and-hammes.com;2022-11-18;DAILY;15.0
+          d616488f-c8b2-45dd-b29f-364d12a20238;romaguera_and_sons;romaguera_and_sons@gmail.com;2020-01-01;MISTAKE;100.0
         CSV
         tempfile.rewind
         tempfile.close

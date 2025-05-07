@@ -13,7 +13,12 @@ module Importers
       end
 
       def disbursement_frequency
-        super&.downcase
+        return if super.blank?
+
+        downcased_frequency = super.downcase
+        return unless ::Merchant.valid_disbursement_frequency?(downcased_frequency)
+
+        downcased_frequency
       end
 
       alias_method :uuid, :id
