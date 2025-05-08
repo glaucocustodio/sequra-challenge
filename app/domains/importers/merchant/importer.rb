@@ -2,7 +2,9 @@ module Importers
   module Merchant
     class Importer < Base
       def import
-        ::Merchant.insert_all(merchants)
+        result = ::Merchant.insert_all(merchants.to_a)
+
+        {imported_count: result.length}
       end
 
       private

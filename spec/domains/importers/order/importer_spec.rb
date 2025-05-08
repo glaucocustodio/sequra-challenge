@@ -8,32 +8,33 @@ RSpec.describe Importers::Order::Importer do
         tempfile = Tempfile.new(["orders", ".csv"])
         tempfile.write(<<~CSV)
           id;merchant_reference;amount;created_at
-          a616488f-c8b2-45dd-b29f-364d12a20238;romaguera_and_sons;54.85;2020-01-01
-          a616488f-c8b2-45dd-b29f-364d12a20239;dooley_stracke;74.69;2024-10-15
-          c566488f-c8b2-45dd-b29f-364d12a45891;dooley_stracke;89.23;2022-04-10
+          364d12a20238;romaguera_and_sons;54.85;2020-01-01
+          364d12a20239;dooley_stracke;74.69;2024-10-15
+          364d12a45891;dooley_stracke;89.23;2022-04-10
         CSV
         tempfile.rewind
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 3)
         expect(Order.count).to eq(3)
         expect(Order.order(:placed_at)).to contain_exactly(
           an_object_having_attributes(
-            uuid: "a616488f-c8b2-45dd-b29f-364d12a20238",
+            external_id: "364d12a20238",
             merchant_id: merchant1.id,
             amount_in_cents: 5485,
             placed_at: Date.new(2020, 1, 1)
           ),
           an_object_having_attributes(
-            uuid: "a616488f-c8b2-45dd-b29f-364d12a20239",
+            external_id: "364d12a20239",
             merchant_id: merchant2.id,
             amount_in_cents: 7469,
             placed_at: Date.new(2024, 10, 15)
           ),
           an_object_having_attributes(
-            uuid: "c566488f-c8b2-45dd-b29f-364d12a45891",
+            external_id: "364d12a45891",
             merchant_id: merchant2.id,
             amount_in_cents: 8923,
             placed_at: Date.new(2022, 4, 10)
@@ -49,27 +50,28 @@ RSpec.describe Importers::Order::Importer do
         tempfile = Tempfile.new(["orders", ".csv"])
         tempfile.write(<<~CSV)
           id;merchant_reference;amount;created_at
-          a616488f-c8b2-45dd-b29f-364d12a20238;romaguera_and_sons;54.85;2020-01-01
-          a616488f-c8b2-45dd-b29f-364d12a20238;romaguera_and_sons;54.85;2020-01-01
-          a616488f-c8b2-45dd-b29f-364d12a20239;romaguera_and_sons;74.69;2024-10-15
+          364d12a20238;romaguera_and_sons;54.85;2020-01-01
+          364d12a20238;romaguera_and_sons;54.85;2020-01-01
+          364d12a20239;romaguera_and_sons;74.69;2024-10-15
         CSV
         tempfile.rewind
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 2)
         expect(Order.count).to eq(2)
         expect(Order.order(:placed_at)).to contain_exactly(
           an_object_having_attributes(
-            uuid: "a616488f-c8b2-45dd-b29f-364d12a20238",
+            external_id: "364d12a20238",
             merchant_id: merchant.id,
             amount_in_cents: 5485,
             placed_at: Date.new(2020, 1, 1),
             commission_fee_in_cents: be_present
           ),
           an_object_having_attributes(
-            uuid: "a616488f-c8b2-45dd-b29f-364d12a20239",
+            external_id: "364d12a20239",
             merchant_id: merchant.id,
             amount_in_cents: 7469,
             placed_at: Date.new(2024, 10, 15),
@@ -86,20 +88,21 @@ RSpec.describe Importers::Order::Importer do
         tempfile = Tempfile.new(["orders", ".csv"])
         tempfile.write(<<~CSV)
           id;merchant_reference;amount;created_at
-          a616488f-c8b2-45dd-b29f-364d12a20238;romaguera_and_sons;54.85;2020-01-01
-          a616488f-c8b2-45dd-b29f-364d12a20239;;74.69;2024-10-15
+          364d12a20238;romaguera_and_sons;54.85;2020-01-01
+          364d12a20239;;74.69;2024-10-15
           ;dooley_stracke;89.23;2022-04-10
         CSV
         tempfile.rewind
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 1)
         expect(Order.count).to eq(1)
         expect(Order.order(:placed_at)).to contain_exactly(
           an_object_having_attributes(
-            uuid: "a616488f-c8b2-45dd-b29f-364d12a20238",
+            external_id: "364d12a20238",
             merchant_id: merchant.id,
             amount_in_cents: 5485,
             placed_at: Date.new(2020, 1, 1),

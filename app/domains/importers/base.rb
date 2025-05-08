@@ -2,12 +2,14 @@ module Importers
   class Base < Struct.new(:csv_file_path, keyword_init: true)
     protected
 
-    def records = mapper_class.from_csv(csv_content, headers: true, col_sep: ";")
+    def records
+      CSV.foreach(csv_file_path, headers: true, col_sep: ";").lazy.map do |row|
+        mapper_class.new(**row.to_h.transform_keys(&:to_sym))
+      end
+    end
 
     def mapper_class
       raise NotImplementedError
     end
-
-    def csv_content = ::File.read(csv_file_path)
   end
 end

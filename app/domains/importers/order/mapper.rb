@@ -7,10 +7,10 @@ module Importers
       attribute :created_at, :date
 
       alias_method :placed_at, :created_at
-      alias_method :uuid, :id
+      alias_method :external_id, :id
 
       def valid?
-        [uuid, merchant_reference, amount, placed_at].all?(&:present?)
+        [external_id, merchant_reference, amount, placed_at].all?(&:present?)
       end
 
       def merchant_id

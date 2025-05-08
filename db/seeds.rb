@@ -7,3 +7,5 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Importers::Merchant::Importer.new(csv_file_path: Rails.root.join("db/seeds/merchants.csv")).import
+Importers::Order::Importer.new(csv_file_path: Rails.root.join("db/seeds/orders.csv")).import

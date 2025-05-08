@@ -12,8 +12,9 @@ RSpec.describe Importers::Merchant::Importer do
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 2)
         expect(Merchant.count).to eq(2)
         expect(Merchant.order(:reference)).to contain_exactly(
           an_object_having_attributes(
@@ -48,8 +49,9 @@ RSpec.describe Importers::Merchant::Importer do
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 1)
         expect(Merchant.count).to eq(1)
         expect(Merchant.order(:reference)).to contain_exactly(
           an_object_having_attributes(
@@ -79,8 +81,9 @@ RSpec.describe Importers::Merchant::Importer do
         tempfile.close
 
         importer = described_class.new(csv_file_path: tempfile.path)
-        importer.import
+        result = importer.import
 
+        expect(result).to eq(imported_count: 1)
         expect(Merchant.count).to eq(1)
         expect(Merchant.order(:reference)).to contain_exactly(
           an_object_having_attributes(
