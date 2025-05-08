@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_07_154421) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_08_083530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,10 +34,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_154421) do
   create_table "orders", force: :cascade do |t|
     t.uuid "uuid", null: false
     t.bigint "merchant_id", null: false
-    t.integer "amount", null: false
+    t.integer "amount_in_cents", null: false
     t.date "placed_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "commission_fee_in_cents", default: 0, null: false
     t.index ["merchant_id"], name: "index_orders_on_merchant_id"
     t.index ["uuid"], name: "index_orders_on_uuid", unique: true
   end

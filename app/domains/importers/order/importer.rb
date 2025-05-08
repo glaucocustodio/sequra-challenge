@@ -13,8 +13,9 @@ module Importers
         {
           uuid: order.uuid,
           merchant_id: order.merchant_id,
-          amount: order.amount,
-          placed_at: order.placed_at
+          amount_in_cents: order.amount_in_cents,
+          placed_at: order.placed_at,
+          commission_fee_in_cents: order.commission_fee_in_cents
         }
       end
 

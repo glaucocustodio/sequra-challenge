@@ -68,3 +68,5 @@ group :development, :test do
 end
 
 gem "shale", "~> 1.2"
+
+gem "money-rails", "~> 1.15"

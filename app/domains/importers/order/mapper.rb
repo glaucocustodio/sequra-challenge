@@ -6,6 +6,9 @@ module Importers
       attribute :amount, :float
       attribute :created_at, :date
 
+      alias_method :placed_at, :created_at
+      alias_method :uuid, :id
+
       def valid?
         [uuid, merchant_reference, amount, placed_at].all?(&:present?)
       end
@@ -16,12 +19,36 @@ module Importers
         end
       end
 
-      def amount
-        (super * 100).to_i # convert to cents
+      # I assume all orders are in the default currency (EUR)
+      # the default currency is set in the config/initializers/money.rb file
+      def amount_in_cents = Money.from_amount(amount).cents
+
+      # I assumed it's fine calculating the commission fee
+      # at import time instead of at the time of disbursement
+      def commission_fee_in_cents
+        fee_percentage = COMMISSION_FEES.find {
+          amount_in_cents.in?(_1[:order_amount_in_cents_range])
+        }.fetch(:fee_percentage)
+
+        (Money.from_cents(amount_in_cents) * fee_percentage).cents
       end
 
-      alias_method :placed_at, :created_at
-      alias_method :uuid, :id
+      private
+
+      COMMISSION_FEES = [
+        {
+          order_amount_in_cents_range: 0..49_99,
+          fee_percentage: 0.01
+        },
+        {
+          order_amount_in_cents_range: 50_00..299_99,
+          fee_percentage: 0.0095
+        },
+        {
+          order_amount_in_cents_range: 300_00..,
+          fee_percentage: 0.0085
+        }
+      ].freeze
     end
   end
 end
