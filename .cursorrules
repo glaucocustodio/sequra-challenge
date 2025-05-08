@@ -1,0 +1,20 @@
+Code Style and Structure
+
+- controllers must only have CRUD (new, create, index, show, edit, update, destroy) actions
+- business logic should be put mostly in the `app/domains` folder
+- the gem `faraday` must be used when defining api clients
+- follow rubocop rules defined in `.rubocop.yml`
+- follow "Tell, Don't Ask" principle (https://thoughtbot.com/blog/tell-dont-ask) to keep encapsulation
+
+Naming Conventions
+
+- class names must be nouns (eg: `UserCreator` instead of `CreateUser`)
+- method names must be verbs (eg: `UserCreator#call` instead of `UserCreator#creator`)
+- variable names must not be abbreviated (eg: `user` instead of `usr`)
+- methods that mutate the caller or that can raise an exception must end with a bang (eg: `Notification#mark_as_read!` instead of `Notification#mark_as_read`)
+- methods that return boolean must end with a question mark (eg: `User#admin?` instead of `User#admin`)
+
+Testing
+
+- write RSpec tests compliant with Even Better Specs guidelines (https://evenbetterspecs.github.io/)
+- avoid top level definitions like `subject` and `let/let!`
