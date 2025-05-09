@@ -16,6 +16,7 @@ RSpec.describe Importers::Merchant::Importer do
 
         expect(result).to eq(imported_count: 2)
         expect(Merchant.count).to eq(2)
+
         expect(Merchant.order(:reference)).to contain_exactly(
           an_object_having_attributes(
             uuid: "a616488f-c8b2-45dd-b29f-364d12a20239",
@@ -23,7 +24,7 @@ RSpec.describe Importers::Merchant::Importer do
             email: "dooley_stracke@gmail.com",
             live_on: Date.new(2024, 10, 15),
             disbursement_frequency: "weekly",
-            minimum_monthly_fee: 200.0
+            minimum_monthly_fee_in_cents: 20000
           ),
           an_object_having_attributes(
             uuid: "a616488f-c8b2-45dd-b29f-364d12a20238",
@@ -31,7 +32,7 @@ RSpec.describe Importers::Merchant::Importer do
             email: "romaguera_and_sons@gmail.com",
             live_on: Date.new(2020, 1, 1),
             disbursement_frequency: "daily",
-            minimum_monthly_fee: 100.0
+            minimum_monthly_fee_in_cents: 10000
           )
         )
       end
@@ -60,7 +61,7 @@ RSpec.describe Importers::Merchant::Importer do
             email: "romaguera_and_sons@gmail.com",
             live_on: Date.new(2020, 1, 1),
             disbursement_frequency: "daily",
-            minimum_monthly_fee: 100.0
+            minimum_monthly_fee_in_cents: 10000
           )
         )
       end
@@ -92,7 +93,7 @@ RSpec.describe Importers::Merchant::Importer do
             email: "romaguera_and_sons@gmail.com",
             live_on: Date.new(2020, 1, 1),
             disbursement_frequency: "daily",
-            minimum_monthly_fee: 100.0
+            minimum_monthly_fee_in_cents: 10000
           )
         )
       end

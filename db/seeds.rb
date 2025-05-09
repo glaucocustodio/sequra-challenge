@@ -9,3 +9,11 @@
 #   end
 Importers::Merchant::Importer.new(csv_file_path: Rails.root.join("db/seeds/merchants.csv")).import
 Importers::Order::Importer.new(csv_file_path: Rails.root.join("db/seeds/orders.csv")).import
+
+(Date.new(2022, 9, 4)..Date.new(2022, 9, 20)).to_a.each do |date|
+  Disbursement::Processor.new(date: date).process
+end
+
+[Date.new(2023, 1, 1), Date.new(2023, 2, 1), Date.new(2023, 3, 1)].each do |date|
+  MinimumMonthlyFee::Processor.new(date: date).process
+end

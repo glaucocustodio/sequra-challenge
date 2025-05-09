@@ -1,5 +1,9 @@
 class Disbursement
   class Processor
+    def initialize(date: Time.zone.today)
+      @date = date
+    end
+
     def process
       ApplicationRecord.transaction do
         disbursement_groups.each do |disbursement_group|
@@ -11,7 +15,9 @@ class Disbursement
 
     private
 
-    def disbursement_groups = ::Order.grouped_for_disbursement
+    attr_reader :date
+
+    def disbursement_groups = ::Order.grouped_for_disbursement(date: date)
 
     def create_disbursement_for(disbursement_group)
       ::Disbursement.create!(

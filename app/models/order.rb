@@ -2,16 +2,8 @@ class Order < ApplicationRecord
   belongs_to :merchant
   belongs_to :disbursement, optional: true
 
-  scope :placed_today, -> { where(placed_at: Time.zone.today) }
-
-  scope :eligible_for_disbursement, -> {
-    placed_today
-      .joins(:merchant)
-      .merge(Merchant.eligible_for_disbursement)
-  }
-
-  scope :grouped_for_disbursement, -> {
-    eligible_for_disbursement
+  scope :grouped_for_disbursement, ->(date:) {
+    eligible_for_disbursement(date: date)
       .group(:merchant_id)
       .select(
         "merchant_id",
@@ -20,6 +12,13 @@ class Order < ApplicationRecord
         "ARRAY_AGG(orders.id) as order_ids"
       )
   }
+
+  scope :eligible_for_disbursement, ->(date:) {
+    placed_on(date: date)
+      .joins(:merchant)
+      .merge(Merchant.eligible_for_disbursement)
+  }
+  scope :placed_on, ->(date:) { where(placed_at: date) }
 
   scope :grouped_for_monthly_fee, ->(date_range) {
     where(placed_at: date_range)

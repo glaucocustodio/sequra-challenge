@@ -1,12 +1,10 @@
 RSpec.describe Order, type: :model do
-  describe ".placed_today" do
-    it "returns orders placed today" do
+  describe ".placed_on" do
+    it "returns orders placed on a given date" do
       _order_placed_yesterday = create(:order, placed_at: Date.new(2025, 5, 5))
       order_placed_today = create(:order, placed_at: Date.new(2025, 5, 6))
 
-      travel_to(Date.new(2025, 5, 6)) do
-        expect(described_class.placed_today).to contain_exactly(order_placed_today)
-      end
+      expect(described_class.placed_on(date: Date.new(2025, 5, 6))).to contain_exactly(order_placed_today)
     end
   end
 
@@ -17,9 +15,9 @@ RSpec.describe Order, type: :model do
       _order_placed_yesterday = create(:order, merchant: merchant_weekly, placed_at: Date.new(2025, 5, 5))
       order_placed_today = create(:order, merchant: merchant_daily, placed_at: Date.new(2025, 5, 6))
 
-      travel_to(Date.new(2025, 5, 6)) do
-        expect(described_class.eligible_for_disbursement).to contain_exactly(order_placed_today)
-      end
+      expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
+        contain_exactly(order_placed_today)
+      )
     end
   end
 
@@ -33,9 +31,9 @@ RSpec.describe Order, type: :model do
       order4 = create(:order, merchant: merchant2, amount_in_cents: 4590, commission_fee_in_cents: 45)
       orders = Order.all
 
-      expect(Order).to receive(:eligible_for_disbursement).and_return(orders)
+      expect(Order).to receive(:eligible_for_disbursement).with(date: Date.new(2025, 5, 6)).and_return(orders)
 
-      expect(described_class.grouped_for_disbursement).to contain_exactly(
+      expect(described_class.grouped_for_disbursement(date: Date.new(2025, 5, 6))).to contain_exactly(
         an_object_having_attributes(
           merchant_id: merchant1.id,
           amount_in_cents: 32510,

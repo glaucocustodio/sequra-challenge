@@ -6,7 +6,7 @@ RSpec.describe MinimumMonthlyFee::Processor do
       date_range = Time.zone.today.last_month.all_month
 
       expect(Order).to(
-        receive(:grouped_for_minimum_monthly_fee).with(date_range).and_return([
+        receive(:grouped_for_monthly_fee).with(date_range).and_return([
           OpenStruct.new(
             merchant_id: merchant1.id,
             monthly_fee_in_cents: 1000

@@ -1,5 +1,9 @@
 module MinimumMonthlyFee
   class Processor
+    def initialize(date: Time.zone.today)
+      @date = date
+    end
+
     def process
       ApplicationRecord.transaction do
         monthly_fee_groups.each do |group|
@@ -10,9 +14,11 @@ module MinimumMonthlyFee
 
     private
 
+    attr_reader :date
+
     def monthly_fee_groups = ::Order.grouped_for_monthly_fee(last_month_range)
 
-    def last_month_range = Time.zone.today.last_month.all_month
+    def last_month_range = date.last_month.all_month
 
     def create_monthly_fee_for(group)
       ::MonthlyFee.create!(

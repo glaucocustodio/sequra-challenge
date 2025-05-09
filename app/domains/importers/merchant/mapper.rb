@@ -6,7 +6,7 @@ module Importers
       attribute :email, :string
       attribute :live_on, :date
       attribute :disbursement_frequency, :string
-      attribute :minimum_monthly_fee, :float
+      attribute :minimum_monthly_fee, :float, default: -> { 0 }
 
       alias_method :uuid, :id
 
