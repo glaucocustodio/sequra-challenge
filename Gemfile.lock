@@ -112,12 +112,6 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.13.1)
-      faraday-net_http (>= 2.0, < 3.5)
-      json
-      logger
-    faraday-net_http (3.4.0)
-      net-http (>= 0.5.0)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -180,8 +174,6 @@ GEM
       money (~> 6.13)
       railties (>= 3.0)
     msgpack (1.8.0)
-    net-http (0.6.0)
-      uri
     net-imap (0.5.8)
       date
       net-protocol
@@ -326,10 +318,6 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails-omakase (1.1.0)
-      rubocop (>= 1.72)
-      rubocop-performance (>= 1.24)
-      rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     shale (1.2.2)
@@ -425,7 +413,6 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
-  faraday
   haml-rails
   importmap-rails
   kamal
@@ -436,7 +423,6 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.0.2)
   rspec-rails
-  rubocop-rails-omakase
   shale (~> 1.2)
   solid_cable
   solid_cache
@@ -448,6 +434,9 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+
+RUBY VERSION
+   ruby 3.3.4p94
 
 BUNDLED WITH
    2.5.17

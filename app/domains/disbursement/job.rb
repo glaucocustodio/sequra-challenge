@@ -1,4 +1,4 @@
-module Disbursement
+class Disbursement
   class Job < ApplicationJob
     queue_as :default
 
