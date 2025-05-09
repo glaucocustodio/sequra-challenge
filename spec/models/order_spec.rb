@@ -38,13 +38,13 @@ RSpec.describe Order, type: :model do
       expect(described_class.grouped_for_disbursement).to contain_exactly(
         an_object_having_attributes(
           merchant_id: merchant1.id,
-          amount_in_cents: 35110,
+          amount_in_cents: 32510,
           commission_fee_in_cents: 2600,
           order_ids: [order1.id, order2.id]
         ),
         an_object_having_attributes(
           merchant_id: merchant2.id,
-          amount_in_cents: 100640,
+          amount_in_cents: 99635,
           commission_fee_in_cents: 1005,
           order_ids: [order3.id, order4.id]
         )

@@ -15,7 +15,7 @@ class Order < ApplicationRecord
       .group(:merchant_id)
       .select(
         "merchant_id",
-        "SUM(amount_in_cents) as amount_in_cents",
+        "SUM(amount_in_cents) - SUM(commission_fee_in_cents) as amount_in_cents",
         "SUM(commission_fee_in_cents) as commission_fee_in_cents",
         "ARRAY_AGG(orders.id) as order_ids"
       )
