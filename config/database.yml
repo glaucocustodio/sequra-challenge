@@ -21,9 +21,17 @@ default: &default
 
 
 development:
-  <<: *default
-  database: sequra_challenge_development
-
+  primary:
+    <<: *default
+    database: sequra_challenge_development
+  queue:
+    <<: *default
+    database: sequra_challenge_development_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: sequra_challenge_development_cable
+    migrations_paths: db/cable_migrate
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is

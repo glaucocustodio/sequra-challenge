@@ -8,3 +8,13 @@
 #     command: "SoftDeletedRecord.due.delete_all"
 #     priority: 2
 #     schedule: at 5am every day
+
+disbursement_job:
+  class: Disbursement::Job
+  queue: default
+  schedule: every day at 8am
+
+monthly_fee_job:
+  class: MinimumMonthlyFee::Job
+  queue: default
+  schedule: every month at 1
