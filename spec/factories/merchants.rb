@@ -5,7 +5,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     live_on { Faker::Date.backward(days: 365) }
     disbursement_frequency { "daily" }
-    minimum_monthly_fee { Faker::Number.between(from: 10, to: 100) }
+    minimum_monthly_fee_in_cents { Faker::Number.between(from: 1000, to: 10000) }
 
     trait :weekly do
       disbursement_frequency { "weekly" }

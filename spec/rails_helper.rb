@@ -10,6 +10,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
+require "ostruct"
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { require _1 }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

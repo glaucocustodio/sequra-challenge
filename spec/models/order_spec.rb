@@ -51,4 +51,58 @@ RSpec.describe Order, type: :model do
       )
     end
   end
+
+  describe ".grouped_for_monthly_fee" do
+    it "returns orders grouped by merchant" do
+      merchant1 = create(:merchant, minimum_monthly_fee_in_cents: 2000)
+      merchant2 = create(:merchant, minimum_monthly_fee_in_cents: 5000)
+
+      create(
+        :order,
+        merchant: merchant1,
+        amount_in_cents: 10050,
+        commission_fee_in_cents: 100,
+        placed_at: Date.new(2025, 4, 1)
+      )
+      create(
+        :order,
+        merchant: merchant1,
+        amount_in_cents: 25060,
+        commission_fee_in_cents: 2500,
+        placed_at: Date.new(2025, 4, 1)
+      )
+      create(
+        :order,
+        merchant: merchant2,
+        amount_in_cents: 96050,
+        commission_fee_in_cents: 960,
+        placed_at: Date.new(2025, 4, 5)
+      )
+      create(
+        :order,
+        merchant: merchant2,
+        amount_in_cents: 4590,
+        commission_fee_in_cents: 45,
+        placed_at: Date.new(2025, 4, 15)
+      )
+      create(
+        :order,
+        merchant: merchant2,
+        amount_in_cents: 600000,
+        commission_fee_in_cents: 6000,
+        placed_at: Date.new(2025, 3, 15)
+      )
+
+      travel_to(Date.new(2025, 5, 6)) do
+        expect(described_class.grouped_for_monthly_fee(Time.zone.today.last_month.all_month)).to(
+          contain_exactly(
+            an_object_having_attributes(
+              merchant_id: merchant2.id,
+              monthly_fee_in_cents: 3995
+            )
+          )
+        )
+      end
+    end
+  end
 end

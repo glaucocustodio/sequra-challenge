@@ -20,4 +20,16 @@ class Order < ApplicationRecord
         "ARRAY_AGG(orders.id) as order_ids"
       )
   }
+
+  scope :grouped_for_monthly_fee, ->(date_range) {
+    where(placed_at: date_range)
+      .joins(:merchant)
+      .merge(Merchant.with_minimum_monthly_fee)
+      .group("merchant_id, merchants.minimum_monthly_fee_in_cents")
+      .select(
+        "merchant_id",
+        "merchants.minimum_monthly_fee_in_cents - SUM(commission_fee_in_cents) as monthly_fee_in_cents"
+      )
+      .having("SUM(commission_fee_in_cents) < merchants.minimum_monthly_fee_in_cents")
+  }
 end

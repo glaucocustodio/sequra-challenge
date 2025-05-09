@@ -1,5 +1,3 @@
-require "ostruct"
-
 RSpec.describe Disbursement::Processor do
   describe "#process" do
     it "disburses orders" do

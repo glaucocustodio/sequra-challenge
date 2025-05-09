@@ -11,8 +11,12 @@ module Importers
       alias_method :uuid, :id
 
       def valid?
-        [uuid, reference, email, live_on, disbursement_frequency, minimum_monthly_fee].all?(&:present?)
+        [uuid, reference, email, live_on, disbursement_frequency, minimum_monthly_fee_in_cents].all?(&:present?)
       end
+
+      # I assume all orders are in the default currency (EUR)
+      # the default currency is set in the config/initializers/money.rb file
+      def minimum_monthly_fee_in_cents = Money.from_amount(minimum_monthly_fee).cents
 
       def disbursement_frequency
         return if super.blank?

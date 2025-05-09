@@ -19,7 +19,7 @@ module Importers
             email: merchant.email,
             live_on: merchant.live_on,
             disbursement_frequency: merchant.disbursement_frequency,
-            minimum_monthly_fee: merchant.minimum_monthly_fee
+            minimum_monthly_fee_in_cents: merchant.minimum_monthly_fee_in_cents
           }
         end
       end

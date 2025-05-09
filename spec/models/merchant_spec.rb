@@ -34,6 +34,16 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
+  describe ".with_minimum_monthly_fee" do
+    it "returns merchants that have a minimum monthly fee" do
+      merchant1 = create(:merchant, minimum_monthly_fee_in_cents: 1000)
+      merchant2 = create(:merchant, minimum_monthly_fee_in_cents: 2000)
+      create(:merchant, minimum_monthly_fee_in_cents: 0)
+
+      expect(described_class.with_minimum_monthly_fee).to contain_exactly(merchant1, merchant2)
+    end
+  end
+
   describe ".eligible_for_disbursement" do
     it "returns merchants that are eligible for disbursement" do
       merchant_daily = create(:merchant, :daily)
