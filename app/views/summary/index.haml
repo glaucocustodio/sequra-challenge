@@ -1,4 +1,4 @@
-%h1.text-3xl.mb-5
+%h1.text-3xl.mb-5.text-primary.font-bold
   Summary
 
 %table.table
@@ -17,10 +17,10 @@
       %tr
         %td= summary.year
         %td= summary.disbursements_count
-        %td= Money.from_cents(summary.amount_in_cents).format
-        %td= Money.from_cents(summary.commission_fee_in_cents).format
+        %td= summary.amount.format
+        %td= summary.commission_fee.format
         %td= summary.monthly_fees_count
         %td= Money.from_cents(summary.monthly_fee_in_cents).format
         %td
           = link_to "View disbursements", disbursements_path(year: summary.year), class: "btn"
-          = link_to "View monthly fees", monthly_fees_path(year: summary.year), class: "btn"
+          = link_to "View monthly fees", monthly_fees_path(year: summary.year), class: "btn btn-primary"

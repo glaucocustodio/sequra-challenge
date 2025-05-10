@@ -2,6 +2,19 @@
 
 Application responsible for calculating merchant disbursements. The challenge is described [here](https://sequra.github.io/backend-challenge/).
 
+## Showcase
+
+🎬 A video demo is available in the folder `showcase/video.mov`.
+
+![Summary](showcase/summary.png)
+> screenshot of the yearly summary page
+
+![Disbursements](showcase/disbursements.png)
+> screenshot of the disbursement page
+
+![Monthly Fees](showcase/monthly-fees.png)
+> screenshot of the monthly fee page
+
 ## Tech notes
 
 The solution was built with the latest version of Ruby on Rails (`rails new` has used my [.railsrc file](https://github.com/glaucocustodio/dotfiles/blob/master/config/.railsrc))
@@ -23,10 +36,6 @@ Tests follow best practices defined in [Even Better Specs](https://evenbetterspe
 
 [standard](https://github.com/standardrb/standard) is used to lint/format the code.
 
-### Continuous integration (CI)
-
-The project has continuous integration (CI) set up that among other things run the tests on every commit to branch main. Check `.github/workflows/ci.yml` for more details.
-
 ### Import process
 
 `db/seeds.rb` imports all merchants and orders from the files `db/seeds/merchants.csv` and `db/seeds/orders.csv` respectively.
@@ -45,6 +54,18 @@ There are two recurring jobs set at `config/recurring.yml`:
 
 - disbursement_job: process merchant disbursements daily
 - monthly_fee_job: calculate monthly fees at the start of each month
+
+### User interface
+
+There is a simple user interface built with [daisyUI](https://daisyui.com/docs/intro/). It displays the yearly summary, disbursements and monthly fees.
+
+Just run the server and visit [http://localhost:3000/](http://localhost:3000/) in the browser.
+
+### Continuous integration (CI)
+
+The project has continuous integration (CI) set up that among other things run the tests on every commit to branch main.
+
+Check `.github/workflows/ci.yml` for more details.
 
 ### AI
 

@@ -5,7 +5,7 @@
     %li
       = "Monthly fees for #{@year}"
 
-%h1.text-3xl.mb-5
+%h1.text-3xl.mb-5.text-primary.font-bold
   = "Monthly fees for #{@year}"
 
 %table.table.table-zebra
@@ -18,5 +18,5 @@
     - @monthly_fees.each do |monthly_fee|
       %tr
         %td= monthly_fee.as_of_date
-        %td= Money.from_cents(monthly_fee.fee_in_cents).format
+        %td= monthly_fee.fee.format
         %td= monthly_fee.merchant.reference

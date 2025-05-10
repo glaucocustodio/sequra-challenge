@@ -3,6 +3,9 @@ class Disbursement < ApplicationRecord
 
   belongs_to :merchant
 
+  monetize :amount_in_cents, as: "amount"
+  monetize :commission_fee_in_cents, as: "commission_fee"
+
   scope :yearly_summary, -> {
     disbursements_subquery = <<~SQL
       SELECT

@@ -5,7 +5,7 @@
     %li
       = "Disbursements for #{@year}"
 
-%h1.text-3xl.mb-5
+%h1.text-3xl.mb-5.text-primary.font-bold
   = "Disbursements for #{@year}"
 
 %table.table.table-zebra
@@ -19,6 +19,6 @@
     - @disbursements.each do |disbursement|
       %tr
         %td= disbursement.as_of_date
-        %td= Money.from_cents(disbursement.amount_in_cents).format
-        %td= Money.from_cents(disbursement.commission_fee_in_cents).format
+        %td= disbursement.amount.format
+        %td= disbursement.commission_fee.format
         %td= disbursement.merchant.reference

@@ -5,8 +5,14 @@ MoneyRails.configure do |config|
   #
   config.default_currency = :eur
 
-  # avoid deprecation warning
   Money.locale_backend = :i18n
+
+  Money.default_formatting_rules = {
+    symbol: true,
+    decimal_mark: ",",
+    thousands_separator: ".",
+    locale: Rails.configuration.i18n.default_locale
+  }
 
   # Set default bank object
   #
