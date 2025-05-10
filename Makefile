@@ -1,5 +1,5 @@
 run:
-	bin/rails server
+	bin/dev
 
 test:
 	bundle exec rspec

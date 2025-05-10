@@ -5,6 +5,9 @@ MoneyRails.configure do |config|
   #
   config.default_currency = :eur
 
+  # avoid deprecation warning
+  Money.locale_backend = :i18n
+
   # Set default bank object
   #
   # Example:
