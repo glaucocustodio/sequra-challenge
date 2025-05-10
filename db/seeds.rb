@@ -10,10 +10,10 @@
 Importers::Merchant::Importer.new(csv_file_path: Rails.root.join("db/seeds/merchants.csv")).import
 Importers::Order::Importer.new(csv_file_path: Rails.root.join("db/seeds/orders.csv")).import
 
-(Date.new(2022, 9, 4)..Date.new(2022, 9, 20)).to_a.each do |date|
-  Disbursement::Processor.new(date: date).process
+Order.grouped_by_placed_at.each do |order|
+  Disbursement::Processor.new(date: order.placed_at).process
 end
 
-[Date.new(2023, 1, 1), Date.new(2023, 2, 1), Date.new(2023, 3, 1)].each do |date|
-  MinimumMonthlyFee::Processor.new(date: date).process
+Order.months_with_orders.each do |order|
+  MinimumMonthlyFee::Processor.new(date: order.placed_month).process
 end

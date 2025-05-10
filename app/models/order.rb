@@ -31,4 +31,13 @@ class Order < ApplicationRecord
       )
       .having("SUM(commission_fee_in_cents) < merchants.minimum_monthly_fee_in_cents")
   }
+
+  scope :months_with_orders, -> {
+    select("DATE_TRUNC('month', placed_at) AS placed_month")
+      .group("DATE_TRUNC('month', placed_at)")
+  }
+
+  scope :grouped_by_placed_at, -> {
+    group(:placed_at).select("placed_at")
+  }
 end

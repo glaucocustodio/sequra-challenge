@@ -1,5 +1,3 @@
-require "csv"
-
 module Importers
   class Base < Struct.new(:csv_file_path, keyword_init: true)
     protected

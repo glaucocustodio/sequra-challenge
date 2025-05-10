@@ -103,4 +103,30 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe ".grouped_by_placed_at" do
+    it "returns orders grouped by placed_at" do
+      create(:order, placed_at: Date.new(2025, 5, 6))
+      create(:order, placed_at: Date.new(2025, 5, 6))
+      create(:order, placed_at: Date.new(2025, 5, 7))
+
+      expect(described_class.grouped_by_placed_at).to contain_exactly(
+        an_object_having_attributes(placed_at: Date.new(2025, 5, 6)),
+        an_object_having_attributes(placed_at: Date.new(2025, 5, 7))
+      )
+    end
+  end
+
+  describe ".months_with_orders" do
+    it "returns months with orders" do
+      create(:order, placed_at: Date.new(2025, 5, 10))
+      create(:order, placed_at: Date.new(2025, 5, 20))
+      create(:order, placed_at: Date.new(2025, 6, 7))
+
+      expect(described_class.months_with_orders).to contain_exactly(
+        an_object_having_attributes(placed_month: Date.new(2025, 5, 1)),
+        an_object_having_attributes(placed_month: Date.new(2025, 6, 1))
+      )
+    end
+  end
 end

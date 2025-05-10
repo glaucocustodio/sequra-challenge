@@ -35,6 +35,8 @@ The importer classes expect a file path as input, so the application could easil
 
 Invalid and duplicate records are ignored. You can try importing the same file twice, nothing will be imported in the second attempt since [insert_all](https://apidock.com/rails/v6.0.0/ActiveRecord/Persistence/ClassMethods/insert_all) is used.
 
+The seeds file also process all disbursements and monthly fees.
+
 ### Recurring jobs
 
 [Solid Queue](https://github.com/rails/solid_queue) is used to process background jobs. This is my first time using this backend, I've mostly used [Sidekiq](https://sidekiq.org/) in real world applications.

@@ -67,3 +67,5 @@ end
 
 gem "shale", "~> 1.2"
 gem "money-rails", "~> 1.15"
+
+gem "csv", "~> 3.3"
