@@ -23,6 +23,10 @@ Tests follow best practices defined in [Even Better Specs](https://evenbetterspe
 
 [standard](https://github.com/standardrb/standard) is used to lint/format the code.
 
+### Continuous integration (CI)
+
+The project has continuous integration (CI) set up that among other things run the tests on every commit to branch main. Check `.github/workflows/ci.yml` for more details.
+
 ### Import process
 
 `db/seeds.rb` imports all merchants and orders from the files `db/seeds/merchants.csv` and `db/seeds/orders.csv` respectively.

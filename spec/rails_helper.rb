@@ -12,7 +12,7 @@ require "rspec/rails"
 
 require "ostruct"
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { require _1 }
+Rails.root.glob("spec/support/**/*.rb").each { require _1 }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
