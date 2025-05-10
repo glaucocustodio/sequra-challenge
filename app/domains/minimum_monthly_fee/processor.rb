@@ -24,7 +24,7 @@ module MinimumMonthlyFee
       ::MonthlyFee.create!(
         merchant_id: group.merchant_id,
         fee_in_cents: group.monthly_fee_in_cents,
-        calculation_month: last_month_range.begin
+        as_of_date: last_month_range.begin
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_09_185249) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_10_172006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,6 +25,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_09_185249) do
     t.integer "commission_fee_in_cents", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "as_of_date", null: false
+    t.index ["merchant_id", "as_of_date"], name: "index_disbursements_on_merchant_id_and_as_of_date", unique: true
     t.index ["merchant_id"], name: "index_disbursements_on_merchant_id"
     t.index ["reference"], name: "index_disbursements_on_reference", unique: true
   end
@@ -45,10 +47,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_09_185249) do
   create_table "monthly_fees", force: :cascade do |t|
     t.bigint "merchant_id", null: false
     t.integer "fee_in_cents", null: false
-    t.date "calculation_month", null: false
+    t.date "as_of_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["merchant_id", "calculation_month"], name: "index_monthly_fees_on_merchant_id_and_calculation_month", unique: true
+    t.index ["merchant_id", "as_of_date"], name: "index_monthly_fees_on_merchant_id_and_as_of_date", unique: true
     t.index ["merchant_id"], name: "index_monthly_fees_on_merchant_id"
   end
 

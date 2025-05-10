@@ -1,6 +1,9 @@
 class Merchant < ApplicationRecord
   enum :disbursement_frequency, %w[daily weekly].index_by(&:itself), validate: true
 
+  has_many :disbursements
+  has_many :monthly_fees
+
   scope :eligible_for_disbursement, -> {
     daily.or(on_weekday)
   }

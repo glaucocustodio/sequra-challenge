@@ -25,12 +25,12 @@ RSpec.describe MinimumMonthlyFee::Processor do
           an_object_having_attributes(
             merchant_id: merchant1.id,
             fee_in_cents: 1000,
-            calculation_month: date_range.begin
+            as_of_date: date_range.begin
           ),
           an_object_having_attributes(
             merchant_id: merchant2.id,
             fee_in_cents: 2000,
-            calculation_month: date_range.begin
+            as_of_date: date_range.begin
           )
         )
       )

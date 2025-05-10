@@ -23,7 +23,8 @@ class Disbursement
       ::Disbursement.create!(
         merchant: disbursement_group.merchant,
         amount_in_cents: disbursement_group.amount_in_cents,
-        commission_fee_in_cents: disbursement_group.commission_fee_in_cents
+        commission_fee_in_cents: disbursement_group.commission_fee_in_cents,
+        as_of_date: date
       )
     end
 

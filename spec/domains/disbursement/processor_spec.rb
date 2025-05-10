@@ -22,6 +22,8 @@ RSpec.describe Disbursement::Processor do
       ]
       expect(Order).to receive(:grouped_for_disbursement).and_return(orders)
 
+      date = Date.new(2025, 1, 1)
+      subject = described_class.new(date: date)
       subject.process
 
       expect(Disbursement.count).to eq(2)
@@ -31,13 +33,15 @@ RSpec.describe Disbursement::Processor do
           reference: be_present,
           merchant: merchant1,
           amount_in_cents: 10050,
-          commission_fee_in_cents: 100
+          commission_fee_in_cents: 100,
+          as_of_date: date
         ),
         an_object_having_attributes(
           reference: be_present,
           merchant: merchant2,
           amount_in_cents: 25060,
-          commission_fee_in_cents: 2500
+          commission_fee_in_cents: 2500,
+          as_of_date: date
         )
       )
       expect(order1.reload.disbursement_id).to eq(disbursements.first.id)

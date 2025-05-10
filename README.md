@@ -35,7 +35,7 @@ The importer classes expect a file path as input, so the application could easil
 
 Invalid and duplicate records are ignored. You can try importing the same file twice, nothing will be imported in the second attempt since [insert_all](https://apidock.com/rails/v6.0.0/ActiveRecord/Persistence/ClassMethods/insert_all) is used.
 
-The seeds file also process all disbursements and monthly fees.
+The seeds file also processes all disbursements and monthly fees.
 
 ### Recurring jobs
 
