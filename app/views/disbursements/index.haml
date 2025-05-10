@@ -1,0 +1,24 @@
+.breadcrumbs.text-sm.mb-5
+  %ul
+    %li
+      = link_to "Summary", root_path
+    %li
+      = "Disbursements for #{@year}"
+
+%h1.text-3xl.mb-5
+  = "Disbursements for #{@year}"
+
+%table.table.table-zebra
+  %thead
+    %tr
+      %th Date
+      %th Amount
+      %th Commission fee
+      %th Merchant
+  %tbody
+    - @disbursements.each do |disbursement|
+      %tr
+        %td= disbursement.as_of_date
+        %td= Money.from_cents(disbursement.amount_in_cents).format
+        %td= Money.from_cents(disbursement.commission_fee_in_cents).format
+        %td= disbursement.merchant.reference

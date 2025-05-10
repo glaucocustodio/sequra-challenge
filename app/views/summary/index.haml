@@ -1,0 +1,26 @@
+%h1.text-3xl.mb-5
+  Summary
+
+%table.table
+  %thead
+    %tr
+      %th Year
+      %th Disbursements
+      %th Disbursed to merchants
+      %th Commission fees
+      %th Amount of monthly fees
+      %th Monthly fees
+      %th
+
+  %tbody
+    - @summary.each do |summary|
+      %tr
+        %td= summary.year
+        %td= summary.disbursements_count
+        %td= Money.from_cents(summary.amount_in_cents).format
+        %td= Money.from_cents(summary.commission_fee_in_cents).format
+        %td= summary.monthly_fees_count
+        %td= Money.from_cents(summary.monthly_fee_in_cents).format
+        %td
+          = link_to "View disbursements", disbursements_path(year: summary.year), class: "btn"
+          = link_to "View monthly fees", monthly_fees_path(year: summary.year), class: "btn"

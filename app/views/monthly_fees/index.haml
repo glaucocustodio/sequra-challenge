@@ -1,0 +1,22 @@
+.breadcrumbs.text-sm.mb-5
+  %ul
+    %li
+      = link_to "Summary", root_path
+    %li
+      = "Monthly fees for #{@year}"
+
+%h1.text-3xl.mb-5
+  = "Monthly fees for #{@year}"
+
+%table.table.table-zebra
+  %thead
+    %tr
+      %th Date
+      %th Amount
+      %th Merchant
+  %tbody
+    - @monthly_fees.each do |monthly_fee|
+      %tr
+        %td= monthly_fee.as_of_date
+        %td= Money.from_cents(monthly_fee.fee_in_cents).format
+        %td= monthly_fee.merchant.reference

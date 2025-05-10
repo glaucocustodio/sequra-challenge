@@ -1,4 +1,6 @@
 class Disbursement < ApplicationRecord
+  include DateScopable
+
   belongs_to :merchant
 
   scope :yearly_summary, -> {
