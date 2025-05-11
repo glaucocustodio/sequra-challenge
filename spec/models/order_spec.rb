@@ -9,15 +9,64 @@ RSpec.describe Order, type: :model do
   end
 
   describe ".eligible_for_disbursement" do
-    it "returns orders that are eligible for disbursement" do
-      merchant_daily = create(:merchant, :daily)
-      merchant_weekly = create(:merchant, :weekly)
-      _order_placed_yesterday = create(:order, merchant: merchant_weekly, placed_at: Date.new(2025, 5, 5))
-      order_placed_today = create(:order, merchant: merchant_daily, placed_at: Date.new(2025, 5, 6))
+    context "when merchant is daily" do
+      context "when the orders have not been disbursed" do
+        it "returns orders that have been placed on the same day" do
+          merchant_daily = create(:merchant, :daily)
 
-      expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
-        contain_exactly(order_placed_today)
-      )
+          order1 = create(:order, merchant: merchant_daily, placed_at: Date.new(2025, 5, 6))
+          _order2 = create(:order, merchant: merchant_daily, placed_at: Date.new(2025, 5, 7))
+
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
+            contain_exactly(order1)
+          )
+        end
+      end
+
+      context "when the orders have been disbursed" do
+        it "does not return them" do
+          merchant_daily = create(:merchant, :daily)
+
+          _order = create(:order, :disbursed, merchant: merchant_daily, placed_at: Date.new(2025, 5, 6))
+
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
+            be_empty
+          )
+        end
+      end
+    end
+
+    context "when merchant is weekly" do
+      context "when the orders have not been disbursed" do
+        it "returns orders that have been placed on the same week day" do
+          merchant_weekly = create(:merchant, :weekly, live_on: Date.new(2025, 5, 6))
+
+          order1 = create(:order, merchant: merchant_weekly, placed_at: Date.new(2025, 5, 6))
+          order2 = create(:order, merchant: merchant_weekly, placed_at: Date.new(2025, 5, 7))
+
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
+            contain_exactly(order1, order2)
+          )
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 7))).to(
+            be_empty
+          )
+        end
+      end
+
+      context "when the orders have been disbursed" do
+        it "does not return them" do
+          merchant_weekly = create(:merchant, :weekly, live_on: Date.new(2025, 5, 6))
+
+          _order = create(:order, :disbursed, merchant: merchant_weekly, placed_at: Date.new(2025, 5, 6))
+
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 6))).to(
+            be_empty
+          )
+          expect(described_class.eligible_for_disbursement(date: Date.new(2025, 5, 13))).to(
+            be_empty
+          )
+        end
+      end
     end
   end
 

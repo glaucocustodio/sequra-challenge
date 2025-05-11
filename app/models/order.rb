@@ -14,11 +14,22 @@ class Order < ApplicationRecord
   }
 
   scope :eligible_for_disbursement, ->(date:) {
+    not_disbursed.eligible_for_disbursement_daily(date: date)
+      .or(
+        not_disbursed.eligible_for_disbursement_weekly(date: date)
+      )
+  }
+  scope :eligible_for_disbursement_daily, ->(date:) {
     placed_on(date: date)
       .joins(:merchant)
-      .merge(Merchant.eligible_for_disbursement)
+      .merge(Merchant.daily)
+  }
+  scope :eligible_for_disbursement_weekly, ->(date:) {
+    joins(:merchant)
+      .merge(Merchant.on_weekday(date: date))
   }
   scope :placed_on, ->(date:) { where(placed_at: date) }
+  scope :not_disbursed, -> { where(disbursement_id: nil) }
 
   scope :grouped_for_monthly_fee, ->(date_range) {
     where(placed_at: date_range)

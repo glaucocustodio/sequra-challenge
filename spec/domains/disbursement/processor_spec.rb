@@ -8,13 +8,13 @@ RSpec.describe Disbursement::Processor do
       order3 = create(:order, merchant: merchant2)
       orders = [
         OpenStruct.new(
-          merchant: merchant1,
+          merchant_id: merchant1.id,
           amount_in_cents: 10050,
           commission_fee_in_cents: 100,
           order_ids: [order1.id, order2.id]
         ),
         OpenStruct.new(
-          merchant: merchant2,
+          merchant_id: merchant2.id,
           amount_in_cents: 25060,
           commission_fee_in_cents: 2500,
           order_ids: [order3.id]

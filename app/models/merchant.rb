@@ -4,12 +4,8 @@ class Merchant < ApplicationRecord
   has_many :disbursements
   has_many :monthly_fees
 
-  scope :eligible_for_disbursement, -> {
-    daily.or(on_weekday)
-  }
-
-  scope :on_weekday, -> {
-    weekly.where("EXTRACT(DOW FROM live_on) = ?", Time.current.wday)
+  scope :on_weekday, ->(date:) {
+    weekly.where("EXTRACT(DOW FROM live_on) = ?", date.wday)
   }
 
   scope :with_minimum_monthly_fee, -> {

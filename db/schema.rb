@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_172006) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_11_213903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,8 +21,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_172006) do
   create_table "disbursements", force: :cascade do |t|
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.bigint "merchant_id", null: false
-    t.integer "amount_in_cents", null: false
-    t.integer "commission_fee_in_cents", null: false
+    t.bigint "amount_in_cents", null: false
+    t.bigint "commission_fee_in_cents", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "as_of_date", null: false

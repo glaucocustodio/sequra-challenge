@@ -46,6 +46,8 @@ Invalid and duplicate records are ignored. You can try importing the same file t
 
 The seeds file also processes all disbursements and monthly fees.
 
+`bundle exec rails db:seed` takes typically ~ 2 minutes and 30 seconds on my MacBook Pro M1.
+
 ### Recurring jobs
 
 [Solid Queue](https://github.com/rails/solid_queue) is used to process background jobs. This is my first time using this backend, I've mostly used [Sidekiq](https://sidekiq.org/) in real world applications.
