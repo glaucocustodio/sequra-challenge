@@ -2,6 +2,9 @@ class Order < ApplicationRecord
   belongs_to :merchant
   belongs_to :disbursement, optional: true
 
+  monetize :amount_in_cents, as: "amount"
+  monetize :commission_fee_in_cents, as: "commission_fee"
+
   scope :grouped_for_disbursement, ->(date:) {
     eligible_for_disbursement(date: date)
       .group(:merchant_id)

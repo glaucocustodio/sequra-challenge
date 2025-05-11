@@ -13,4 +13,5 @@ Rails.application.routes.draw do
 
   resources :disbursements, only: [:index]
   resources :monthly_fees, only: [:index]
+  resources :orders, only: [:index]
 end

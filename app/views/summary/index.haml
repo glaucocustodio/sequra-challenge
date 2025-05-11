@@ -22,5 +22,5 @@
         %td= summary.monthly_fees_count
         %td= Money.from_cents(summary.monthly_fee_in_cents).format
         %td
-          = link_to "View disbursements", disbursements_path(year: summary.year), class: "btn"
-          = link_to "View monthly fees", monthly_fees_path(year: summary.year), class: "btn btn-primary"
+          = link_to "View disbursements", disbursements_path(year: summary.year), class: "btn btn-sm"
+          = link_to "View monthly fees", monthly_fees_path(year: summary.year), class: "btn btn-sm btn-primary"

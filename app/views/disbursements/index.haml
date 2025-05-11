@@ -15,6 +15,7 @@
       %th Amount
       %th Commission fee
       %th Merchant
+      %th Orders
   %tbody
     - @disbursements.each do |disbursement|
       %tr
@@ -22,3 +23,4 @@
         %td= disbursement.amount.format
         %td= disbursement.commission_fee.format
         %td= disbursement.merchant.reference
+        %td= link_to "View orders", orders_path(disbursement_reference: disbursement.reference), class: "btn btn-sm btn-primary"

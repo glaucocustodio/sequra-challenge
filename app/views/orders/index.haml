@@ -1,0 +1,27 @@
+.breadcrumbs.text-sm.mb-5
+  %ul
+    %li
+      = link_to "Summary", root_path
+    %li
+      = link_to "Disbursements for #{@disbursement.as_of_date.year}", disbursements_path(year: @disbursement.as_of_date.year)
+    %li
+      = "Orders for disbursement #{@disbursement.reference}"
+
+%h1.text-3xl.mb-5.text-primary.font-bold
+  = "Orders for disbursement #{@disbursement.reference}"
+
+%table.table.table-zebra
+  %thead
+    %tr
+      %th Amount
+      %th Commission fee
+      %th Merchant
+      %th Placed at
+
+  %tbody
+    - @orders.each do |order|
+      %tr
+        %td= order.amount.format
+        %td= order.commission_fee.format
+        %td= order.merchant.reference
+        %td= order.placed_at

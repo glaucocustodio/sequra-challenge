@@ -3,6 +3,8 @@ class Disbursement < ApplicationRecord
 
   belongs_to :merchant
 
+  has_many :orders
+
   monetize :amount_in_cents, as: "amount"
   monetize :commission_fee_in_cents, as: "commission_fee"
 
