@@ -22,6 +22,7 @@ class Disbursement
     def disbursement_groups = ::Order.grouped_for_disbursement(date: date)
 
     def create_disbursement_for(disbursement_group)
+      # use insert_all so it will automatically avoid duplicates (because of the unique index)
       result = ::Disbursement.insert_all([
         {
           merchant_id: disbursement_group.merchant_id,

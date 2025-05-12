@@ -2,6 +2,14 @@
 
 Application responsible for calculating merchant disbursements. The challenge is described [here](https://sequra.github.io/backend-challenge/).
 
+## Output
+
+| Year | Disbursements | Disbursed to merchants | Commission fees | Amount of monthly fees | Monthly fees |
+|------|---------------|------------------------|-----------------|------------------------|--------------|
+| 2022 | 1436 | €107.039.267,23 | €962.917,16 | 30 |  	€540,76 |
+| 2023 | 9729 | €118.461.231,42 | €1.073.442,10 | 104 | €1.766,60 |
+
+
 ## Showcase
 
 🎬 A video demo is available in the folder `showcase/video.mov`.
@@ -11,6 +19,9 @@ Application responsible for calculating merchant disbursements. The challenge is
 
 ![Disbursements](showcase/disbursements.png)
 > screenshot of the disbursement page
+
+![Orders](showcase/orders.png)
+> screenshot of the orders page
 
 ![Monthly Fees](showcase/monthly-fees.png)
 > screenshot of the monthly fee page
@@ -46,6 +57,8 @@ Invalid and duplicate records are ignored. You can try importing the same file t
 
 The seeds file also processes all disbursements and monthly fees.
 
+The system is prepared to process new merchants and orders, one just need to change the csv files and run again `bundle exec rails db:seed`, it'll only insert/process new data.
+
 `bundle exec rails db:seed` takes typically ~ 2 minutes and 30 seconds on my MacBook Pro M1.
 
 ### Recurring jobs
@@ -54,12 +67,12 @@ The seeds file also processes all disbursements and monthly fees.
 
 There are two recurring jobs set at `config/recurring.yml`:
 
-- disbursement_job: process merchant disbursements daily
-- monthly_fee_job: calculate monthly fees at the start of each month
+- disbursement_job: process merchant disbursements daily at 8AM
+- monthly_fee_job: calculate monthly fees at the start of each month (first day at 1AM - [0 1 1 * *](https://crontab.guru/#0_1_1_*_*))
 
 ### User interface
 
-There is a simple user interface built with [daisyUI](https://daisyui.com/docs/intro/). It displays the yearly summary, disbursements and monthly fees.
+There is a simple user interface built with [daisyUI](https://daisyui.com/docs/intro/). It displays the yearly summary, disbursements (their orders) and monthly fees.
 
 Just run the server and visit [http://localhost:3000/](http://localhost:3000/) in the browser.
 
